@@ -1,0 +1,81 @@
+{
+	"name": "@neovici/testing",
+	"version": "0.0.1",
+	"description": "A testing utils library",
+	"keywords": [
+		"lit-html",
+		"web-components",
+		"haunted"
+	],
+	"homepage": "https://github.com/neovici/testing#readme",
+	"bugs": {
+		"url": "https://github.com/neovici/testing/issues"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/neovici/testing.git"
+	},
+	"license": "Apache-2.0",
+	"author": "",
+	"main": "dist/index.js",
+	"directories": {
+		"test": "test"
+	},
+	"files": [
+		"dist/"
+	],
+	"scripts": {
+		"lint": "tsc && eslint --cache .",
+		"build": "tsc -p tsconfig.build.json",
+		"start": "wds",
+		"test": "wtr --coverage",
+		"test:watch": "wtr --watch",
+		"prepare": "husky install"
+	},
+	"release": {
+		"plugins": [
+			"@semantic-release/commit-analyzer",
+			"@semantic-release/release-notes-generator",
+			"@semantic-release/changelog",
+			"@semantic-release/github",
+			"@semantic-release/npm",
+			"@semantic-release/git"
+		],
+		"branch": "main",
+		"preset": "conventionalcommits"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"commitlint": {
+		"extends": [
+			"@commitlint/config-conventional"
+		],
+		"rules": {
+			"body-max-line-length": [
+				1,
+				"always",
+				100
+			]
+		}
+	},
+	"exports": {
+		".": "./dist/index.js"
+	},
+	"dependencies": {
+		"haunted": "^5.0.0",
+		"lit-html": "^2.0.0"
+	},
+	"devDependencies": {
+		"@commitlint/cli": "^17.0.0",
+		"@commitlint/config-conventional": "^17.0.0",
+		"@neovici/cfg": "^1.13.1",
+		"@open-wc/testing": "^3.0.0",
+		"@semantic-release/changelog": "^6.0.0",
+		"@semantic-release/git": "^10.0.0",
+		"husky": "^8.0.0",
+		"semantic-release": "^21.0.0",
+		"sinon": "^15.0.0",
+		"typescript": "^5.0.0"
+	}
+}
