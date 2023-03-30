@@ -27,7 +27,7 @@ function useValue(value: string) {
 const TestContext = createContext<{ value?: string }>({});
 customElements.define('test-ctx-provider', TestContext.Provider);
 
-describe('render-hook', () => {
+describe('renderHook', () => {
 	it('returns hook result', async () => {
 		const { result, nextUpdate } = await renderHook(() => useCounter());
 		expect(result.current.count).to.equal(0);
