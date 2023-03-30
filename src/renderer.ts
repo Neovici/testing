@@ -33,8 +33,9 @@ export function mkRenderer<TProps, TResult>(
 				props
 			)
 		);
-		const el = root.querySelector('render-hook') as HTMLElement &
-			HarnessProps<TProps>;
+		const el = (
+			root.matches('render-hook') ? root : root.querySelector('render-hook')
+		) as HTMLElement & HarnessProps<TProps>;
 		return { root, el };
 	};
 }
