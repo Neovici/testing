@@ -1,5 +1,6 @@
 import { RendererProps, Wrapper } from './types';
-import { component, html } from 'haunted';
+import { component } from 'haunted';
+import { unsafeStatic, html } from 'lit-html/static.js';
 import { litFixtureSync } from '@open-wc/testing';
 import { TemplateResult } from 'lit-html';
 
@@ -7,11 +8,12 @@ interface HarnessProps<TProps> {
 	hookProps?: TProps;
 	render: (hookProps?: TProps) => void;
 }
+const tagName = 'render-hooklt';
 const RenderHook = <T>({ render, hookProps }: HarnessProps<T>) => {
 	render(hookProps);
 };
 customElements.define(
-	'render-hook',
+	tagName,
 	component<HarnessProps<unknown>>(RenderHook, { useShadowDOM: false })
 );
 
@@ -29,12 +31,16 @@ export function mkRenderer<TProps, TResult>(
 	return (props?: TProps) => {
 		const root = litFixtureSync(
 			wrapper(
-				html`<render-hook .render=${render} .hookProps=${props}></render-hook>`,
+				html`<${unsafeStatic(tagName)}
+					.render=${render}
+					.hookProps=${props}
+				></${unsafeStatic(tagName)}>`,
 				props
 			)
 		);
-		const el = root.querySelector('render-hook') as HTMLElement &
-			HarnessProps<TProps>;
+		const el = (
+			root.matches(tagName) ? root : root.querySelector(tagName)
+		) as HTMLElement & HarnessProps<TProps>;
 		return { root, el };
 	};
 }

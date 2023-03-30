@@ -9,15 +9,17 @@ export function mkResult<TValue>() {
 			return results.map(({ value, error }) => error ?? (value as TValue));
 		},
 		get current() {
-			const { value, error } = results[results.length - 1] ?? {};
+			const lastResult = results[results.length - 1];
+			const value = lastResult?.value;
+			const error = lastResult?.error;
 			if (error) {
 				throw error;
 			}
 			return value as TValue;
 		},
 		get error() {
-			const { error } = results[results.length - 1] ?? {};
-			return error;
+			const lastResult = results[results.length - 1];
+			return lastResult?.error;
 		},
 	};
 
