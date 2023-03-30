@@ -1,5 +1,6 @@
 import { RendererProps, Wrapper } from './types';
-import { component, html } from 'haunted';
+import { component } from 'haunted';
+import { unsafeStatic, html } from 'lit-html/static.js';
 import { litFixtureSync } from '@open-wc/testing';
 import { TemplateResult } from 'lit-html';
 
@@ -30,10 +31,10 @@ export function mkRenderer<TProps, TResult>(
 	return (props?: TProps) => {
 		const root = litFixtureSync(
 			wrapper(
-				html`<render-hooklt
+				html`<${unsafeStatic(tagName)}
 					.render=${render}
 					.hookProps=${props}
-				></render-hooklt>`,
+				></${unsafeStatic(tagName)}>`,
 				props
 			)
 		);
