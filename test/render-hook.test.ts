@@ -1,6 +1,14 @@
 import { renderHook } from '../src';
 import { expect } from '@open-wc/testing';
-import { useState, useCallback, useEffect, useRef } from 'haunted';
+import {
+	useState,
+	useCallback,
+	useEffect,
+	useRef,
+	createContext,
+	useContext,
+	html,
+} from 'haunted';
 
 function useCounter() {
 	const [count, setCount] = useState(0);
@@ -15,6 +23,9 @@ function useValue(value: string) {
 	}, [value]);
 	return ref;
 }
+
+const TestContext = createContext<{ value?: string }>({});
+customElements.define('test-ctx-provider', TestContext.Provider);
 
 describe('render-hook', () => {
 	it('returns hook result', async () => {
@@ -55,7 +66,22 @@ describe('render-hook', () => {
 		const { result } = await renderHook(() => {
 			throw new Error('asd');
 		});
-		expect(() => result.current).to.be.throw();
+		expect(() => result.current).to.throw();
 		expect(result.error).not.to.be.undefined;
+	});
+	it('wraps', async () => {
+		const { result } = await renderHook(
+			() => {
+				return useContext(TestContext)?.value;
+			},
+			{
+				initialProps: { value: 'tst' },
+				wrapper: (el, props) =>
+					html`<test-ctx-provider .value=${{ value: props?.value }}
+						>${el}</test-ctx-provider
+					>`,
+			}
+		);
+		expect(result.current).to.equal('tst');
 	});
 });
