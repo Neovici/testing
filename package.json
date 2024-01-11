@@ -5,7 +5,8 @@
 	"keywords": [
 		"lit-html",
 		"web-components",
-		"haunted"
+		"haunted",
+		"pion"
 	],
 	"homepage": "https://github.com/neovici/testing#readme",
 	"bugs": {
@@ -63,19 +64,19 @@
 		".": "./dist/index.js"
 	},
 	"dependencies": {
-		"@open-wc/testing": "^3.1.7",
-		"haunted": "^5.0.0",
-		"lit-html": "^2.0.0"
+		"@open-wc/testing": "^4.0.0",
+		"@pionjs/pion": "^2.0.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^17.0.0",
-		"@commitlint/config-conventional": "^17.0.0",
+		"@commitlint/cli": "^18.0.0",
+		"@commitlint/config-conventional": "^18.0.0",
 		"@neovici/cfg": "^1.13.1",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
+		"@types/mocha": "^10.0.6",
 		"husky": "^8.0.0",
-		"semantic-release": "^21.0.0",
-		"sinon": "^15.0.0",
+		"semantic-release": "^22.0.0",
+		"sinon": "^17.0.0",
 		"typescript": "^5.0.0"
 	}
 }

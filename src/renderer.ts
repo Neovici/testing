@@ -1,5 +1,5 @@
 import { RendererProps, Wrapper } from './types';
-import { component } from 'haunted';
+import { component } from '@pionjs/pion';
 import { unsafeStatic, html } from 'lit-html/static.js';
 import { litFixtureSync } from '@open-wc/testing';
 import { TemplateResult } from 'lit-html';
