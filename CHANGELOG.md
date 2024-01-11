@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/neovici/testing/compare/v1.0.0...v2.0.0) (2024-01-11)
+
+
+### ⚠ BREAKING CHANGES
+
+* Update to @pionjs/pion
+
+### Features
+
+* update to pion ([1903305](https://github.com/neovici/testing/commit/19033053b2536e69656be375cc629bb60cde92d4))
+
 ## 1.0.0 (2023-03-30)
 
 
