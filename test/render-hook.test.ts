@@ -8,7 +8,7 @@ import {
 	createContext,
 	useContext,
 	html,
-} from 'haunted';
+} from '@pionjs/pion';
 
 function useCounter() {
 	const [count, setCount] = useState(0);
