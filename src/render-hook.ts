@@ -1,4 +1,4 @@
-import { mkResult } from './result';
+import { mkResult, type RenderResult } from './result';
 import { mkRenderer } from './renderer';
 import { waitUntil } from '@open-wc/testing';
 import type { RenderHookOptions } from './types';
@@ -13,10 +13,18 @@ const tillNextUpdate =
 		return waitUntil(() => updated, message, options);
 	};
 
+export interface RenderHookResult<TProps, TResult> {
+	result: RenderResult<TResult>;
+	rerender: (newProps?: TProps) => Promise<void>;
+	unmount: () => void;
+	nextUpdate: (message?: string, options?: { interval?: number; timeout?: number }) => Promise<void>;
+	host: HTMLElement;
+}
+
 export const renderHook = async <TProps, TResult>(
 	callback: (props: TProps) => TResult,
 	options: RenderHookOptions<TProps> = {}
-) => {
+): Promise<RenderHookResult<TProps, TResult>> => {
 	const { result, setValue, setError, addResolver } = mkResult<TResult>();
 	const renderProps = { callback, setValue, setError };
 	let hookProps = options.initialProps;
@@ -41,5 +49,6 @@ export const renderHook = async <TProps, TResult>(
 		rerender: rerenderHook,
 		unmount: unmountHook,
 		nextUpdate,
+		host: el,
 	};
 };
