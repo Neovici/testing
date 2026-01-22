@@ -1,3 +1,9 @@
+## <small>2.1.1 (2026-01-22)</small>
+
+* Merge pull request #6 from Neovici/fix/repository-url-case ([fe85093](https://github.com/Neovici/testing/commit/fe85093)), closes [#6](https://github.com/Neovici/testing/issues/6)
+* chore: update urls ([08e5385](https://github.com/Neovici/testing/commit/08e5385))
+* fix: normalize repository URL for sigstore provenance ([86c65ba](https://github.com/Neovici/testing/commit/86c65ba))
+
 ## 2.1.0 (2026-01-22)
 
 * feat: expose host element from renderHook (#5) ([d2d3c7a](https://github.com/neovici/testing/commit/d2d3c7a)), closes [#5](https://github.com/neovici/testing/issues/5) [#4](https://github.com/neovici/testing/issues/4)
