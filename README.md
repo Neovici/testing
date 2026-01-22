@@ -27,13 +27,18 @@ describe('useCounter', () => {
 
 ### Host Element Access
 
-The `renderHook` function returns a `host` element that can be used to test hooks that depend on `useHost()` from `@neovici/cosmoz-utils`:
+The `renderHook` function returns a `host` element that provides access to the underlying host element for your hooks. This is useful for hooks that need to interact with the host element directly, such as:
+
+- Dispatching custom events
+- Listening to events on the host element
+- Accessing element properties and methods
+- Testing event-driven behavior
 
 ```typescript
 import { renderHook } from '@neovici/testing';
 import { hook } from '@pionjs/pion';
 
-// Hook that uses useHost()
+// Example hook that interacts with host element
 const useHostElement = hook(
   class extends Hook {
     update() {
@@ -42,17 +47,27 @@ const useHostElement = hook(
   }
 ) as () => HTMLElement;
 
-// Test hooks that depend on host element
-describe('hooks with useHost', () => {
+// Test hooks that interact with host element
+describe('hooks with host interaction', () => {
   it('should expose host element', async () => {
     const { host, result } = await renderHook(() => useHostElement());
     expect(host).to.be.instanceOf(HTMLElement);
     expect(result.current).to.equal(host);
   });
+
+  it('should fire events on host element', async () => {
+    const { host } = await renderHook(() => useHostElement());
+    const eventFired = { fired: false };
+    
+    host.addEventListener('test-event', () => {
+      eventFired.fired = true;
+    });
+    
+    host.dispatchEvent(new Event('test-event'));
+    expect(eventFired.fired).to.be.true;
+  });
 });
 ```
-
-This is particularly useful for testing hooks like `use-close` that need access to the host element's shadow root and event capabilities.
 
 ### Return Value
 
@@ -62,7 +77,7 @@ The `renderHook` function returns an object with the following properties:
 - `rerender(newProps?)`: Re-render the hook with new props
 - `unmount()`: Unmount the hook and cleanup
 - `nextUpdate(message?, options?)`: Wait for the next update
-- `host`: The host element (HTMLElement) for hooks that use `useHost()`
+- `host`: The host element (HTMLElement) for hooks that need direct host access
 
 ### Options
 

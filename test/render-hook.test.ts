@@ -29,7 +29,6 @@ function useValue(value: string) {
 const TestContext = createContext<{ value?: string }>({});
 customElements.define('test-ctx-provider', TestContext.Provider);
 
-// Hook that uses useHost() for testing
 const useHostElement = hook(
 	class extends Hook {
 		update() {
@@ -38,8 +37,7 @@ const useHostElement = hook(
 	}
 ) as () => HTMLElement;
 
-// Hook that uses useHost with specific type
-const useHostWithType = hook(
+const useButtonHost = hook(
 	class extends Hook {
 		update() {
 			return this.state.host as HTMLButtonElement;
@@ -112,6 +110,31 @@ describe('renderHook', () => {
 		expect(host.tagName.toLowerCase()).to.include('render-hook');
 	});
 
+	it('can fire custom events on host', async () => {
+		const { host } = await renderHook(() => useHostElement());
+		let eventFired = false;
+		
+		host.addEventListener('custom-event', () => {
+			eventFired = true;
+		});
+		
+		host.dispatchEvent(new Event('custom-event'));
+		expect(eventFired).to.be.true;
+	});
+
+	it('can listen to native events on host', async () => {
+		const { host } = await renderHook(() => useHostElement());
+		let clickCount = 0;
+		
+		host.addEventListener('click', () => {
+			clickCount++;
+		});
+		
+		host.dispatchEvent(new MouseEvent('click'));
+		host.dispatchEvent(new MouseEvent('click'));
+		expect(clickCount).to.equal(2);
+	});
+
 	it('host element is accessible during hook execution', async () => {
 		const capturedHost = [] as HTMLElement[];
 		const captureHost = () => {
@@ -128,7 +151,7 @@ describe('renderHook', () => {
 	it('host element has expected properties', async () => {
 		const { host } = await renderHook(() => useHostElement());
 		expect(host).to.have.property('tagName');
-		expect(host).to.have.property('shadowRoot').that.is.null; // useShadowDOM: false
+		expect(host).to.have.property('shadowRoot').that.is.null;
 		expect(host).to.have.property('appendChild');
 		expect(host).to.have.property('removeChild');
 	});
@@ -157,16 +180,13 @@ describe('renderHook', () => {
 			return useHostElement();
 		};
 		
-		const { host } = await renderHook(() => captureMultipleHosts());
+		const { host, result } = await renderHook(() => captureMultipleHosts());
 		expect(hostReferences).to.have.lengthOf(1);
 		expect(hostReferences[0]).to.equal(host);
 		expect(result.current).to.equal(host);
 	});
 
 	it('host element accessible with wrapper', async () => {
-		const wrapperElement = 'test-wrapper';
-		const TestWrapper = () => html`<div class="${wrapperElement}"></div>`;
-		
 		const { host } = await renderHook(
 			() => useHostElement(),
 			{
@@ -197,8 +217,34 @@ describe('renderHook', () => {
 	});
 
 	it('works with typed host element', async () => {
-		const { host } = await renderHook(() => useHostWithType());
+		const { host } = await renderHook(() => useButtonHost());
 		expect(host).to.be.instanceOf(HTMLButtonElement);
 		expect(host.tagName).to.equal('BUTTON');
+	});
+
+	it('can dispatch and handle events with detail data', async () => {
+		const { host } = await renderHook(() => useHostElement());
+		let receivedData: any = null;
+		
+		host.addEventListener('data-event', (e: Event) => {
+			receivedData = (e as CustomEvent).detail;
+		});
+		
+		host.dispatchEvent(new CustomEvent('data-event', { detail: { foo: 'bar' } }));
+		expect(receivedData).to.deep.equal({ foo: 'bar' });
+	});
+
+	it('event listeners are cleaned up on unmount', async () => {
+		const { host, unmount } = await renderHook(() => useHostElement());
+		let eventCount = 0;
+		
+		host.addEventListener('test-event', () => {
+			eventCount++;
+		});
+		
+		unmount();
+		
+		host.dispatchEvent(new Event('test-event'));
+		expect(eventCount).to.equal(0);
 	});
 });
