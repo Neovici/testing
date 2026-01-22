@@ -3,9 +3,8 @@
 		"allowSyntheticDefaultImports": true,
 		"noEmit": true,
 		"module": "esnext",
-		"moduleResolution": "node",
+		"moduleResolution": "bundler",
 		"strict": true,
-		"target": "esnext",
-		"allowJs": true
+		"target": "esnext"
 	}
 }

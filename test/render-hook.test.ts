@@ -39,12 +39,14 @@ describe('renderHook', () => {
 		expect(result.current.count).to.equal(1);
 		expect(result.all.length).to.equal(2);
 	});
+
 	it('renders initialProps', async () => {
 		const { result } = await renderHook((value: string) => useValue(value), {
 			initialProps: 'asd',
 		});
 		expect(result.current.current).to.equal('asd');
 	});
+
 	it('updates props', async () => {
 		const { result, rerender } = await renderHook((value: string) =>
 			useValue(value)
@@ -64,6 +66,7 @@ describe('renderHook', () => {
 		unmount();
 		expect(result.current.current).to.be.true;
 	});
+
 	it('errors', async () => {
 		const { result } = await renderHook(() => {
 			throw new Error('asd');
@@ -71,6 +74,7 @@ describe('renderHook', () => {
 		expect(() => result.current).to.throw();
 		expect(result.error).not.to.be.undefined;
 	});
+
 	it('wraps', async () => {
 		const { result } = await renderHook(
 			() => {
