@@ -1,5 +1,7 @@
 import type { RenderResult } from './types';
 
+export type { RenderResult };
+
 export function mkResult<TValue>() {
 	const results: Array<{ value?: TValue; error?: Error }> = [];
 	const resolvers: Array<() => void> = [];

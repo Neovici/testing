@@ -19,6 +19,7 @@
 	"license": "Apache-2.0",
 	"author": "",
 	"main": "dist/index.js",
+	"type": "module",
 	"directories": {
 		"test": "test"
 	},
@@ -65,18 +66,19 @@
 	},
 	"dependencies": {
 		"@open-wc/testing": "^4.0.0",
-		"@pionjs/pion": "^2.0.0"
+		"@pionjs/pion": "^2.0.0",
+		"lit-html": "^3.0.0"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^18.0.0",
-		"@commitlint/config-conventional": "^18.0.0",
-		"@neovici/cfg": "^1.13.1",
+		"@commitlint/cli": "^20.0.0",
+		"@commitlint/config-conventional": "^20.0.0",
+		"@neovici/cfg": "^2.0.0",
 		"@semantic-release/changelog": "^6.0.0",
 		"@semantic-release/git": "^10.0.0",
 		"@types/mocha": "^10.0.6",
-		"husky": "^8.0.0",
-		"semantic-release": "^22.0.0",
-		"sinon": "^17.0.0",
-		"typescript": "^5.0.0"
+		"eslint-import-resolver-typescript": "^4.4.4",
+		"husky": "^9.1.7",
+		"semantic-release": "^25.0.0",
+		"sinon": "^17.0.0"
 	}
 }
