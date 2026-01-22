@@ -148,19 +148,21 @@ describe('renderHook', () => {
 
 	it('host element supports custom properties', async () => {
 		const { host } = await renderHook(() => useSimple());
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		(host as any).testProperty = 'test-value';
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		expect((host as any).testProperty).to.equal('test-value');
 	});
 
 	it('can dispatch and handle events with detail data', async () => {
 		const { host } = await renderHook(() => useSimple());
-		let receivedData: any = null;
+		let receivedData: { foo: string } | null = null;
 		
-		host.addEventListener('data-event', (e: Event) => {
-			receivedData = (e as CustomEvent).detail;
-		});
+		host.addEventListener('data-event', ((e: CustomEvent<{ foo: string }>) => {
+			receivedData = e.detail;
+		}) as EventListener);
 		
-		host.dispatchEvent(new CustomEvent('data-event', { detail: { foo: 'bar' } }));
+		host.dispatchEvent(new CustomEvent<{ foo: string }>('data-event', { detail: { foo: 'bar' } }));
 		expect(receivedData).to.deep.equal({ foo: 'bar' });
 	});
 

@@ -65,7 +65,8 @@
 	},
 	"dependencies": {
 		"@open-wc/testing": "^4.0.0",
-		"@pionjs/pion": "^2.0.0"
+		"@pionjs/pion": "^2.0.0",
+		"lit-html": "^3.0.0"
 	},
 	"devDependencies": {
 		"@commitlint/cli": "^18.0.0",
