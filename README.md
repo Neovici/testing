@@ -25,50 +25,6 @@ describe('useCounter', () => {
 });
 ```
 
-### Host Element Access
-
-The `renderHook` function returns a `host` element that provides access to the underlying host element for your hooks. This is useful for hooks that need to interact with the host element directly, such as:
-
-- Dispatching custom events
-- Listening to events on the host element
-- Accessing element properties and methods
-- Testing event-driven behavior
-
-```typescript
-import { renderHook } from '@neovici/testing';
-import { hook } from '@pionjs/pion';
-
-// Example hook that interacts with host element
-const useHostElement = hook(
-  class extends Hook {
-    update() {
-      return this.state.host as HTMLElement;
-    }
-  }
-) as () => HTMLElement;
-
-// Test hooks that interact with host element
-describe('hooks with host interaction', () => {
-  it('should expose host element', async () => {
-    const { host, result } = await renderHook(() => useHostElement());
-    expect(host).to.be.instanceOf(HTMLElement);
-    expect(result.current).to.equal(host);
-  });
-
-  it('should fire events on host element', async () => {
-    const { host } = await renderHook(() => useHostElement());
-    const eventFired = { fired: false };
-    
-    host.addEventListener('test-event', () => {
-      eventFired.fired = true;
-    });
-    
-    host.dispatchEvent(new Event('test-event'));
-    expect(eventFired.fired).to.be.true;
-  });
-});
-```
-
 ### Return Value
 
 The `renderHook` function returns an object with the following properties:
