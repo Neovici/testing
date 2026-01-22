@@ -1,3 +1,7 @@
+## 2.1.0 (2026-01-22)
+
+* feat: expose host element from renderHook (#5) ([d2d3c7a](https://github.com/neovici/testing/commit/d2d3c7a)), closes [#5](https://github.com/neovici/testing/issues/5) [#4](https://github.com/neovici/testing/issues/4)
+
 ## [2.0.0](https://github.com/neovici/testing/compare/v1.0.0...v2.0.0) (2024-01-11)
 
 
