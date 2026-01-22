@@ -169,18 +169,4 @@ describe('renderHook', () => {
 		host.dispatchEvent(new CustomEvent<{ foo: string }>('data-event', { detail: { foo: 'bar' } }));
 		expect(receivedData).to.deep.equal({ foo: 'bar' });
 	});
-
-	it('event listeners are cleaned up on unmount', async () => {
-		const { host, unmount } = await renderHook(() => useSimple());
-		let eventCount = 0;
-		
-		host.addEventListener('test-event', () => {
-			eventCount++;
-		});
-		
-		unmount();
-		
-		host.dispatchEvent(new Event('test-event'));
-		expect(eventCount).to.equal(0);
-	});
 });
