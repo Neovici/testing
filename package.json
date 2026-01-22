@@ -8,13 +8,13 @@
 		"haunted",
 		"pion"
 	],
-	"homepage": "https://github.com/neovici/testing#readme",
+	"homepage": "https://github.com/Neovici/testing#readme",
 	"bugs": {
-		"url": "https://github.com/neovici/testing/issues"
+		"url": "https://github.com/Neovici/testing/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/neovici/testing.git"
+		"url": "https://github.com/Neovici/testing"
 	},
 	"license": "Apache-2.0",
 	"author": "",
