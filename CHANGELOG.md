@@ -1,3 +1,7 @@
+## 2.2.0 (2026-02-06)
+
+* feat: remove @open-wc/testing dependency (#8) ([237d51e](https://github.com/Neovici/testing/commit/237d51e)), closes [#8](https://github.com/Neovici/testing/issues/8)
+
 ## <small>2.1.1 (2026-01-22)</small>
 
 * Merge pull request #6 from Neovici/fix/repository-url-case ([fe85093](https://github.com/Neovici/testing/commit/fe85093)), closes [#6](https://github.com/Neovici/testing/issues/6)
