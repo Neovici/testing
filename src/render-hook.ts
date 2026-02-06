@@ -1,17 +1,18 @@
 import { mkResult, type RenderResult } from './result';
 import { mkRenderer } from './renderer';
-import { waitUntil } from '@open-wc/testing';
 import type { RenderHookOptions } from './types';
 
 const tillNextUpdate =
 	<T>(addResolver: ReturnType<typeof mkResult<T>>['addResolver']) =>
-	(message?: string, options?: { interval?: number; timeout?: number }) => {
-		let updated = false;
-		addResolver(() => {
-			updated = true;
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	(_message?: string, _options?: { interval?: number; timeout?: number }) =>
+		new Promise<void>((resolve) => {
+			addResolver(() => {
+				// Allow effects to run after the render completes
+				// Effects in Pion run asynchronously, so we need to wait
+				setTimeout(resolve, 0);
+			});
 		});
-		return waitUntil(() => updated, message, options);
-	};
 
 export interface RenderHookResult<TProps, TResult> {
 	result: RenderResult<TResult>;

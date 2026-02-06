@@ -1,8 +1,7 @@
 import { RendererProps, Wrapper } from './types';
 import { component } from '@pionjs/pion';
 import { unsafeStatic, html } from 'lit-html/static.js';
-import { litFixtureSync } from '@open-wc/testing';
-import { TemplateResult } from 'lit-html';
+import { render as litRender, TemplateResult } from 'lit-html';
 
 interface HarnessProps<TProps> {
 	hookProps?: TProps;
@@ -21,7 +20,7 @@ export function mkRenderer<TProps, TResult>(
 	{ callback, setValue, setError }: RendererProps<TProps, TResult>,
 	wrapper: Wrapper<TProps> = (el: TemplateResult) => el
 ) {
-	const render = (hookProps: TProps) => {
+	const renderCallback = (hookProps: TProps) => {
 		try {
 			setValue(callback(hookProps));
 		} catch (e) {
@@ -29,15 +28,17 @@ export function mkRenderer<TProps, TResult>(
 		}
 	};
 	return (props?: TProps) => {
-		const root = litFixtureSync(
-			wrapper(
-				html`<${unsafeStatic(tagName)}
-					.render=${render}
-					.hookProps=${props}
-				></${unsafeStatic(tagName)}>`,
-				props
-			)
+		const container = document.createElement('div');
+		const template = wrapper(
+			html`<${unsafeStatic(tagName)}
+				.render=${renderCallback}
+				.hookProps=${props}
+			></${unsafeStatic(tagName)}>`,
+			props
 		);
+		litRender(template, container);
+		document.body.appendChild(container);
+		const root = container.firstElementChild as HTMLElement;
 		const el = (
 			root.matches(tagName) ? root : root.querySelector(tagName)
 		) as HTMLElement & HarnessProps<TProps>;

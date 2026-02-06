@@ -25,15 +25,27 @@ export function mkResult<TValue>() {
 		},
 	};
 
+	let pendingUpdate = false;
+
 	const updateResult = (value?: TValue, error?: Error) => {
 		results.push({ value, error });
-		resolvers.splice(0, resolvers.length).forEach((resolve) => resolve());
+		const pending = resolvers.splice(0, resolvers.length);
+		if (pending.length > 0) {
+			pending.forEach((resolve) => resolve());
+		} else {
+			pendingUpdate = true;
+		}
 	};
 
 	return {
 		result,
 		addResolver: (resolver: () => void) => {
-			resolvers.push(resolver);
+			if (pendingUpdate) {
+				pendingUpdate = false;
+				resolver();
+			} else {
+				resolvers.push(resolver);
+			}
 		},
 		setValue: (value: TValue) => updateResult(value),
 		setError: (error: Error) => updateResult(undefined, error),
