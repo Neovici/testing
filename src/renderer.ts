@@ -1,8 +1,7 @@
 import { RendererProps, Wrapper } from './types';
 import { component } from '@pionjs/pion';
 import { unsafeStatic, html } from 'lit-html/static.js';
-import { litFixtureSync } from '@open-wc/testing';
-import { TemplateResult } from 'lit-html';
+import { render as litRender, TemplateResult } from 'lit-html';
 
 interface HarnessProps<TProps> {
 	hookProps?: TProps;
@@ -29,15 +28,19 @@ export function mkRenderer<TProps, TResult>(
 		}
 	};
 	return (props?: TProps) => {
-		const root = litFixtureSync(
+		const container = document.createElement('div');
+		document.body.appendChild(container);
+		litRender(
 			wrapper(
 				html`<${unsafeStatic(tagName)}
 					.render=${render}
 					.hookProps=${props}
 				></${unsafeStatic(tagName)}>`,
 				props
-			)
+			),
+			container
 		);
+		const root = container.firstElementChild as HTMLElement;
 		const el = (
 			root.matches(tagName) ? root : root.querySelector(tagName)
 		) as HTMLElement & HarnessProps<TProps>;

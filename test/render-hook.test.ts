@@ -1,5 +1,5 @@
 import { renderHook } from '../src';
-import { expect } from '@open-wc/testing';
+import { expect } from '@esm-bundle/chai';
 import {
 	useState,
 	useCallback,
