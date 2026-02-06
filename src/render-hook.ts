@@ -1,6 +1,6 @@
 import { mkResult, type RenderResult } from './result';
 import { mkRenderer } from './renderer';
-import { waitUntil } from '@open-wc/testing';
+import { waitUntil } from './wait-until';
 import type { RenderHookOptions } from './types';
 
 const tillNextUpdate =
