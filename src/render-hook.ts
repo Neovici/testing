@@ -1,7 +1,7 @@
-import { mkResult, type RenderResult } from './result';
-import { mkRenderer } from './renderer';
-import { waitUntil } from './wait-until';
-import type { RenderHookOptions } from './types';
+import { mkResult, type RenderResult } from './result.js';
+import { mkRenderer } from './renderer.js';
+import { waitUntil } from './wait-until.js';
+import type { RenderHookOptions } from './types.js';
 
 const tillNextUpdate =
 	<T>(addResolver: ReturnType<typeof mkResult<T>>['addResolver']) =>
