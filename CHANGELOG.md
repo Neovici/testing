@@ -1,3 +1,7 @@
+## 2.3.0 (2026-02-07)
+
+* feat: add .js extensions to imports for Node.js ESM compatibility (#9) ([6b19761](https://github.com/Neovici/testing/commit/6b19761)), closes [#9](https://github.com/Neovici/testing/issues/9)
+
 ## 2.2.0 (2026-02-06)
 
 * feat: remove @open-wc/testing dependency (#8) ([237d51e](https://github.com/Neovici/testing/commit/237d51e)), closes [#8](https://github.com/Neovici/testing/issues/8)

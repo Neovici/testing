@@ -1,6 +1,6 @@
 {
 	"name": "@neovici/testing",
-	"version": "2.2.0",
+	"version": "2.3.0",
 	"description": "A testing utils library",
 	"keywords": [
 		"lit-html",
