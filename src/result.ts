@@ -1,4 +1,4 @@
-import type { RenderResult } from './types';
+import type { RenderResult } from './types.js';
 
 export type { RenderResult };
 

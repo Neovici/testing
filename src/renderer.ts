@@ -1,4 +1,4 @@
-import { RendererProps, Wrapper } from './types';
+import { RendererProps, Wrapper } from './types.js';
 import { component } from '@pionjs/pion';
 import { unsafeStatic, html } from 'lit-html/static.js';
 import { render as litRender, TemplateResult } from 'lit-html';
